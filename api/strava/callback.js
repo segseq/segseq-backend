@@ -36,7 +36,7 @@ export default async function handler(req, res) {
     );
 
     // 🔥 Redirection vers la page profil
-    return res.redirect("https://segseq.github.io/segseq/profile.html");
+    return res.redirect("https://segseq.vercel.app/profile.html");
   } catch (err) {
     console.error("Callback crash:", err);
     return res.status(500).send("Token exchange failed");
