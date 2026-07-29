@@ -21,13 +21,22 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
+    // Vérification : Strava a-t-il renvoyé un token ?
+    if (!data.access_token) {
+      console.error("Strava token error:", data);
+      return res.status(500).json({
+        error: "Token exchange failed",
+        details: data
+      });
+    }
+
     // Stockage en mémoire (MVP)
     global.accessToken = data.access_token;
 
     // Redirection vers ton site statique
-    res.redirect("https://segseq.github.io/segseq/");
+    return res.redirect("https://segseq.github.io/segseq/");
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Token exchange failed");
+    console.error("Callback crash:", err);
+    return res.status(500).send("Token exchange failed");
   }
 }
